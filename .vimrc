@@ -10,6 +10,9 @@
 
 set nocompatible
 
+"脚本语言设置，防止乱码
+scriptencoding utf-8
+set encoding=utf-8
 
 "使Vim在指定备份文件夹和undo文件夹
 set backupdir=~/.vim/backupdir
@@ -158,7 +161,6 @@ let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$']
 let NERDTreeShowBookmarks=1
 let NERDTreeWinPos="left"
 " Automatically open a NERDTree if no files where specifie
-autocmd StdinReadPre * let s:std_in=1
 autocmd vimenter * if !argc() | NERDTree | endif
 " Close vim if the only window left open is a NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
@@ -166,6 +168,20 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 "nmap <F5> :NERDTreeMirror<CR>
 nmap <F5> :NERDTreeToggle<CR>
 
+"let g:NERDTreeDirArrowExpandable = '▸'
+"let g:NERDTreeDirArrowCollapsible = '▾'
+
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ "Unknown"   : "?"
+    \ }
 
 """""""""""""""""""""""""
 "Tagbar
@@ -182,10 +198,6 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.png,*.jpg,*.jpeg,*.gif " MacOSX/Linux
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 
 set laststatus=2 " Always display the status line
-if has('statusline')
-    :so /home/gudh/.vim/bundle/vim-fugitive/plugin/fugitive.vim
-    set laststatus=2
-endif
 set statusline+=%{fugitive#statusline()} "  Git Hotness
 if executable('ag')
      " Use Ag over Grep
@@ -195,6 +207,7 @@ if executable('ag')
     " Ag is fast enough that CtrlP doesn't need to cache
     let g:ctrlp_use_caching = 0
 endif
+
 
 "语法检查
 let g:syntastic_check_on_open=1
@@ -245,9 +258,11 @@ Plugin 'Tagbar'
 "c.vim
 "Plugin 'c.vim'
 "NERDTree
-Plugin 'The-NERD-tree'
+Plugin 'scrooloose/nerdtree'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
 "Ctrap
-Plugin 'ctrap'
+Plugin 'kien/ctrlp.vim'
+Plugin 'tpope/vim-fugitive'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
